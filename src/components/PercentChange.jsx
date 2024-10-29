@@ -3,7 +3,7 @@ const PercentChange = ({ percent }) => {
 
   return (
     <span className={colorPercent}>
-      {percent ? ` ${percent.toFixed(2)} %` : "-"}
+      {percent ? ` ${percent.toFixed(2)}%` : "-"}
     </span>
   );
 };
