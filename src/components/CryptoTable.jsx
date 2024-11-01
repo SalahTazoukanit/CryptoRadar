@@ -20,8 +20,7 @@ const CryptoTable = ({ coinsData }) => {
 
   return (
     <>
-      {/* <div className="flex flex-col"> */}
-      <div className="flex md:gap-24">
+      <div className="flex md:gap-24 table-header">
         <div className="flex">
           <span className="w-20">
             Top{" "}
@@ -74,13 +73,78 @@ const CryptoTable = ({ coinsData }) => {
         </div>
       </div>
       <div className="">
-        {coinsData.slice(0, rangeNumber).map((coin, index) => (
-          <div key={coin}>
-            <CoinLine coin={coin} index={index} />
-          </div>
-        ))}
+        {coinsData
+          .slice(0, rangeNumber)
+          .sort((a, b) => {
+            switch (orderBy) {
+              case "Prix":
+                return b.quotes.USD.price - a.quotes.USD.price;
+              case "Prixreverse":
+                return a.quotes.USD.price - b.quotes.USD.price;
+              case "MarketCap":
+                return b.quotes.USD.market_cap - a.quotes.USD.market_cap;
+              case "MarketCapreverse":
+                return a.quotes.USD.market_cap - b.quotes.USD.market_cap;
+              case "Volume":
+                return b.quotes.USD.volume_24h - a.quotes.USD.volume_24h;
+              case "Volumereverse":
+                return a.quotes.USD.volume_24h - b.quotes.USD.volume_24h;
+              case "1h":
+                return (
+                  b.quotes.USD.percent_change_1h -
+                  a.quotes.USD.percent_change_1h
+                );
+              case "1hreverse":
+                return (
+                  a.quotes.USD.percent_change_1h -
+                  b.quotes.USD.percent_change_1h
+                );
+              case "1j":
+                return (
+                  b.quotes.USD.percent_change_24h -
+                  a.quotes.USD.percent_change_24h
+                );
+              case "1jreverse":
+                return (
+                  a.quotes.USD.percent_change_24h -
+                  b.quotes.USD.percent_change_24h
+                );
+              case "7j":
+                return (
+                  b.quotes.USD.percent_change_7d -
+                  a.quotes.USD.percent_change_7d
+                );
+              case "7jreverse":
+                return (
+                  a.quotes.USD.percent_change_7d -
+                  b.quotes.USD.percent_change_7d
+                );
+              case "1m":
+                return (
+                  b.quotes.USD.percent_change_30d -
+                  a.quotes.USD.percent_change_30d
+                );
+              case "1mreverse":
+                return (
+                  a.quotes.USD.percent_change_30d -
+                  b.quotes.USD.percent_change_30d
+                );
+              case "1y":
+                return (
+                  b.quotes.USD.percent_change_1y -
+                  a.quotes.USD.percent_change_1y
+                );
+              case "1yreverse":
+                return (
+                  a.quotes.USD.percent_change_1y -
+                  b.quotes.USD.percent_change_1y
+                );
+            }
+          })
+          .map((coin, index) => (
+            <CoinLine key={coin.id} coin={coin} index={index} />
+          ))}
       </div>
-      {/* </div> */}
     </>
   );
 };

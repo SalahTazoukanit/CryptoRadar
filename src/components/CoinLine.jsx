@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
+import PercentChange from "./PercentChange";
+import CoinChart from "./CoinChart";
 
 const CoinLine = ({ coin, index }) => {
+  const [displayCoinChart, setDisplayCoinChart] = useState(false);
+
   const mrkCapFormatter = (num) => {
     let newNum = String(num).split("").slice(0, -6);
     return Number(newNum.join(""));
   };
+
   return (
     <>
       <div className="flex items-center gap-20">
-        <div className="flex md:w-80 py-2 border-b border-gray text-sm">
+        <div className="flex md:w-80 py-2 text-sm">
           <div className="flex w-50 text-left gap-2">
             <p>{index + 1}</p>
-            <div className="infos hover:opacity-50 hover:cursor-pointer">
-              <img className="w-8" src="/public/chart.png" alt="chart icon" />
+            <div
+              onClick={() => setDisplayCoinChart(!displayCoinChart)}
+              className="infos hover:cursor-pointer"
+            >
+              <img className="w-8" src="/chart.png" alt="chart icon" />
+              <div className="absolute w-1/2 z-10 opacity-90" id={coin.name}>
+                {displayCoinChart && (
+                  <CoinChart
+                    coin={coin}
+                    coinId={coin.id}
+                    coinName={coin.name}
+                  />
+                )}
+              </div>
             </div>
             <h4 className="text-sm">{coin.name.slice(0, 8)}</h4>
             <span> - {coin.symbol}</span>
@@ -26,24 +43,32 @@ const CoinLine = ({ coin, index }) => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-9 w-full border-b border-gray">
-          <p>{coin.quotes.USD.price.toFixed(2)}</p>
-          <p>
+        <div className="grid grid-cols-9 w-full">
+          <p>{coin.quotes.USD.price.toFixed()} $</p>
+          <p className="opacity-60">
             {mrkCapFormatter(coin.quotes.USD.market_cap).toLocaleString()} M$
           </p>
-          <p>{coin.quotes.USD.volume_24h.toLocaleString()}</p>
+          <p className="opacity-60">{coin.quotes.USD.volume_24h.toFixed()} $</p>
           <p className=" hidden md:block">
-            {coin.quotes.USD.percent_change_1h.toFixed(2)}%
+            <PercentChange percent={coin.quotes.USD.percent_change_1h} />
           </p>
-          <p className="">{coin.quotes.USD.percent_change_24h.toFixed(2)}%</p>
+          <p className="">
+            <PercentChange percent={coin.quotes.USD.percent_change_24h} />
+          </p>
           <p className=" hidden md:block">
-            {coin.quotes.USD.percent_change_7d.toFixed(2)}%
+            <PercentChange percent={coin.quotes.USD.percent_change_7d} />
           </p>
-          <p className="">{coin.quotes.USD.percent_change_30d.toFixed(2)}%</p>
+          <p className="">
+            <PercentChange percent={coin.quotes.USD.percent_change_30d} />
+          </p>
           <p className=" hidden md:block">
-            {coin.quotes.USD.percent_change_1y.toFixed(2)}%
+            <PercentChange percent={coin.quotes.USD.percent_change_1y} />
           </p>
-          <p className="">{coin.quotes.USD.percent_change_1y.toFixed(2)}%</p>
+          {coin.quotes.USD.percent_from_price_ath > -3 ? (
+            <p> ATH !</p>
+          ) : (
+            <PercentChange percent={coin.quotes.USD.percent_from_price_ath} />
+          )}
         </div>
       </div>
     </>

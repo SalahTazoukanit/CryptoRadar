@@ -10,3 +10,17 @@ body{
 p{
     font-size:medium;
 }
+.active{
+    top: 1;
+    height: 30px;
+    position: fixed;
+    background-color: rgb(89, 94, 98);
+    border-radius: 5px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px;  box-shadow: rgba(234, 234, 254, 0.1) 0px 1px 0px, rgba(247, 247, 253, 0.1) 0px 8px 24px, rgba(185, 185, 195, 0.1) 0px 16px 48px;
+    width:95%;
+}
+/* .chart-coin{
+    position: absolute;
+    background-color: #181A20;
+    width: 100%;
+} */

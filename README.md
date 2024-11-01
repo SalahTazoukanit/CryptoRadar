@@ -1,6 +1,6 @@
 # Crypto Radar
 
-Market data : `https://api.coingecko.com/api/v3/global`
+Market data : `https://api.coingecko.com/api/v3/global` 
 
 All market data : `https://api.coinpaprika.com/v1/tickers`
 

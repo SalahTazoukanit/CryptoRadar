@@ -2,7 +2,8 @@ import LeftHeader from "../components/LeftHeader";
 import Chart from "../components/Chart";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Crypto from "../components/CryptoTable";
+import CryptoTable from "../components/CryptoTable";
+import ArrowToTop from "../components/ArrowToTop";
 
 const Homepage = () => {
   const [coinsData, setCoinsData] = useState([]);
@@ -10,6 +11,14 @@ const Homepage = () => {
   const getAllData = () => {
     axios.get(`https://api.coinpaprika.com/v1/tickers`).then((response) => {
       setCoinsData(response.data.slice(0, 200));
+    });
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 300) {
+        document.querySelector(".table-header").classList.add("active");
+      } else {
+        document.querySelector(".table-header").classList.remove("active");
+      }
     });
   };
 
@@ -23,7 +32,8 @@ const Homepage = () => {
           <LeftHeader />
           <Chart coinsData={coinsData} />
         </header>
-        <Crypto coinsData={coinsData} />
+        <CryptoTable coinsData={coinsData} />
+        <ArrowToTop />
       </div>
     </>
   );
